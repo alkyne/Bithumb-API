@@ -3,6 +3,7 @@ from time import sleep
 import sys
 from xcoin_api_client1 import *
 from key import api_key, api_secret
+from datetime import datetime
 
 interval = 0.01
 
@@ -50,7 +51,7 @@ while cnt >= 0:
         print(f"매수 주문: {result}")
         total_trade_krw = total_trade_krw + (buy_quantity * current_price)
 
-        sleep(0.01)
+        sleep(0.05)
 
         # ask (market)
         ########################################################################
