@@ -7,7 +7,7 @@ from datetime import datetime
 
 api = XCoinAPI(api_key, api_secret)
 
-invest_amount = 100000  # 600000 KRW으로 매수
+invest_amount = 800000  # 600000 KRW으로 매수
 interval = 0.01  # 초단위 간격
 
 # 현재 시장가격 조회
@@ -24,7 +24,7 @@ buy_quantity = invest_amount / current_price
 buy_quantity = round(buy_quantity, 4)
 
 # hard coding version
-buy_quantity = 0.001
+# buy_quantity = 0.001
 print (f"buy_quantity: {buy_quantity}")
 input("Press Enter key to proceed")
 
@@ -108,7 +108,7 @@ while cnt >= 0:
             print (f"Ask order_status: {status}")
             if status == 'Completed':
                 break
-            sleep(1)
+            sleep(2)
         sleep(20)
 
     except Exception as e:
