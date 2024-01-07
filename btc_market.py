@@ -4,15 +4,16 @@ import sys
 from xcoin_api_client1 import *
 from key import api_key, api_secret
 
+interval = 0.01
+
 api = XCoinAPI(api_key, api_secret)
 
-invest_amount = 180000  # 180000 KRW으로 매수
-interval = 0.01
+invest_amount = 1500000  # 180000 KRW으로 매수
 
 # 현재 시장가격 조회
 rgParams = {
     'endpoint': '/public/ticker/BTC_KRW',  #<-- endpoint가 가장 처음으로 와야 한다.
-    "order_currency": "USDT",
+    # "order_currency": "USDT",
 }
 result = api.xcoinApiCall(rgParams['endpoint'], rgParams)
 current_price = int(result['data']['closing_price'])
@@ -23,11 +24,14 @@ buy_quantity = invest_amount / current_price
 buy_quantity = round(buy_quantity, 4)
 
 # hard coding version
-buy_quantity = 0.003
+# buy_quantity = 0.02
+
 print (f"buy_quantity: {buy_quantity}")
 input("Press Enter key to proceed")
 
-cnt = 200
+total_trade_krw = 0
+
+cnt = 100
 while cnt >= 0:
     cnt = cnt - 1
     try:
@@ -44,8 +48,9 @@ while cnt >= 0:
 
         result = api.xcoinApiCall(rgParams['endpoint'], rgParams)
         print(f"매수 주문: {result}")
+        total_trade_krw = total_trade_krw + (buy_quantity * current_price)
 
-        sleep(0.1)
+        sleep(0.01)
 
         # ask (market)
         ########################################################################
@@ -62,25 +67,12 @@ while cnt >= 0:
         ########################################################################
 
         print(f"매도 주문: {result}")
+        total_trade_krw = int(total_trade_krw + (buy_quantity * current_price))
+
+        print(f"Total trade KRW: {format(total_trade_krw, ',')}")
         print()
 
-
-        # # 매도 주문 체결되면 넘어가게 하기
-        # while True:
-        #     rgParams = {
-        #         'endpoint': '/info/order_detail',  #<-- endpoint가 가장 처음으로 와야 한다.
-        #         "order_id": order_id,
-        #         "order_currency": "BTC",
-        #         "payment_currency": "KRW"
-        #     }
-        #     result = api.xcoinApiCall(rgParams['endpoint'], rgParams)
-        #     status = result['data']['order_status']
-        #     print (status)
-        #     if status == 'Completed':
-        #         break
-        #     sleep(0.4)
-
-        sleep(interval)
+        # sleep(interval)
 
     except Exception as e:
         print(f"에러 발생: {e}")
