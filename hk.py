@@ -3,13 +3,20 @@ from time import sleep
 import sys
 from xcoin_api_client1 import *
 from datetime import datetime
-
-api_key = "API KEY"
-api_secret = " API SECRET"
+from key import api_key, api_secret
 
 interval = 0.05
 
 api = XCoinAPI(api_key, api_secret)
+
+rgParams = {
+    'endpoint': '/public/ticker/BTC_KRW',  #<-- endpoint가 가장 처음으로 와야 한다.
+    # "order_currency": "USDT",
+}
+result = api.xcoinApiCall(rgParams['endpoint'], rgParams)
+current_price = int(result['data']['closing_price'])
+
+print (f"current_price : {current_price}")
 
 # hard coding version
 buy_quantity = 0.005 # about 300,000 KRW
@@ -23,7 +30,6 @@ cnt = 100000
 while cnt >= 0:
     cnt = cnt - 1
     try:
-       
         # bid (market)
         ########################################################################
 
