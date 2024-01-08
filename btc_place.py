@@ -7,13 +7,13 @@ from datetime import datetime
 
 api = XCoinAPI(api_key, api_secret)
 
-invest_amount = 800000  # 600000 KRW으로 매수
+invest_amount = 300000  # 600000 KRW으로 매수
 interval = 0.01  # 초단위 간격
 
 # 현재 시장가격 조회
 rgParams = {
     'endpoint': '/public/ticker/BTC_KRW',  #<-- endpoint가 가장 처음으로 와야 한다.
-    "order_currency": "USDT",
+    # "order_currency": "USDT",
 }
 result = api.xcoinApiCall(rgParams['endpoint'], rgParams)
 current_price = int(result['data']['closing_price'])
@@ -30,7 +30,7 @@ input("Press Enter key to proceed")
 
 total_trade_krw = 0
 
-cnt = 500
+cnt = 50000
 while cnt >= 0:
     cnt = cnt - 1
     try:
@@ -81,7 +81,7 @@ while cnt >= 0:
             "order_currency": "BTC",
             "payment_currency": "KRW",
             "units": buy_quantity,
-            "price": price + 1000, # plus one tick !!
+            "price": price, # plus one tick !!
             "type": "ask"
         }
         result = api.xcoinApiCall(rgParams['endpoint'], rgParams)
@@ -92,7 +92,7 @@ while cnt >= 0:
         now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         print(f"{now} 매도 주문: {result}")
         total_trade_krw = total_trade_krw + (buy_quantity * current_price)
-        print(f"Total trade KRW: {total_trade_krw}")
+        print(f"Total trade KRW: {format(total_trade_krw, ',')}")
         print()
 
         # 매도 주문 체결되면 넘어가게 하기
@@ -109,7 +109,7 @@ while cnt >= 0:
             if status == 'Completed':
                 break
             sleep(2)
-        sleep(20)
+        sleep(3)
 
     except Exception as e:
         print(f"에러 발생: {e}")
