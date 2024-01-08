@@ -4,6 +4,7 @@ import sys
 from xcoin_api_client1 import *
 from key import api_key, api_secret
 from datetime import datetime
+from utils import calc_pnl
 
 api = XCoinAPI(api_key, api_secret)
 
@@ -29,6 +30,7 @@ print (f"buy_quantity: {buy_quantity}")
 input("Press Enter key to proceed")
 
 total_trade_krw = 0
+total_pnl_krw = 0
 
 cnt = 50000
 while cnt >= 0:
@@ -93,6 +95,11 @@ while cnt >= 0:
         print(f"{now} 매도 주문: {result}")
         total_trade_krw = total_trade_krw + (buy_quantity * current_price)
         print(f"Total trade KRW: {format(total_trade_krw, ',')}")
+
+        total_pnl_krw = total_pnl_krw + calc_pnl(bid_order_id, ask_order_id, buy_quantity)
+        print(f"Total PNL KRW: {format(total_pnl_krw, ',')}")
+
+
         print()
 
         # 매도 주문 체결되면 넘어가게 하기
