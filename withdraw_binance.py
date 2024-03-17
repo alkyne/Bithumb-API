@@ -41,15 +41,17 @@ def withdraw_usdt(units):
     }
     response = bithumb_api_query(endpoint, payload)
     print(response)
+    currency = "USDT"
     if response['status'] == "0000":
-        print("withdraw success !!")
+        print(f"withdraw {units} {currency} success !!")
     return response
 
 available_usdt = get_available_usdt()
 print(f"now available usdt: {available_usdt}")
 
-# withdraw_usdt(8000)
+# withdraw_usdt(18000)
 
+# input()
 while True:
     usdt_balance = get_available_usdt()
     sleep(1)
