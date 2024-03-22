@@ -63,13 +63,12 @@ def withdraw_usdt(units, address, currency="USDT"):
 while True:
     currency = "SOL"
     available_sol = get_available(currency)
-    print(f"now available currency: {available_sol}")
+    print(f"now available currency: {available_sol} {currency}")
     sleep(5)
     if float(available_sol) > 61:
         status = withdraw_usdt(available_sol, upbit_sol_address, currency)
         if status == "0000":
             sys.exit(1)
-
 
 
 '''
