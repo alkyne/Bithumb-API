@@ -54,9 +54,10 @@ def withdraw_usdt(units, address, currency="USDT"):
     }
     response = bithumb_api_query(endpoint, payload)
     print(response)
-    if response['status'] == "0000":
+    status = response['status']
+    if status == "0000":
         print(f"withdraw {units} {currency} success !!")
-    return response
+    return status
 
 
 while True:
@@ -65,8 +66,10 @@ while True:
     print(f"now available currency: {available_sol}")
     sleep(5)
     if float(available_sol) > 61:
-        withdraw_usdt(available_sol, upbit_sol_address, currency)
-        sys.exit(0)
+        status = withdraw_usdt(available_sol, upbit_sol_address, currency)
+        if status == "0000":
+            sys.exit(1)
+
 
 
 '''
