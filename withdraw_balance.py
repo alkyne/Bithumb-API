@@ -2,6 +2,7 @@ from time import sleep
 from xcoin_api_client1 import *
 import sys
 from key import api_key_withdraw, api_secret_withdraw
+from key import ko_name, en_name
 
 API_KEY = api_key_withdraw
 API_SECRET = api_secret_withdraw
@@ -48,8 +49,8 @@ def withdraw_usdt(units, address, currency="USDT"):
     "units": units,
     "address": address["address"],
     "currency": currency,
-    "ko_name": "최동민",
-    "en_name": "DONGMIN CHOI",
+    "ko_name": ko_name,
+    "en_name": en_name,
     "exchange_name": address["exchange_name"]
     }
     response = bithumb_api_query(endpoint, payload)
